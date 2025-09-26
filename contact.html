@@ -35,12 +35,23 @@
 
      <script>
     document.getElementById("quickOrderForm").addEventListener("submit", function(event) {
-      event.preventDefault(); // form ka default submit action rokenge
-      alert("Your message has been sent successfully!");
-      this.reset(); // optional: form ko clear karne ke liye
-    });
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      alert("Please fill out all the fields before submitting.");
+      return;
+    }
+
+    alert("Your message has been sent successfully!");
+    this.reset();
+  });
   </script>
 
 </body>
 
 </html>
+
