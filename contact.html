@@ -33,6 +33,14 @@
   </div>
 </section>
 
+     <script>
+    document.getElementById("quickOrderForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // form ka default submit action rokenge
+      alert("Your message has been sent successfully!");
+      this.reset(); // optional: form ko clear karne ke liye
+    });
+  </script>
 
 </body>
+
 </html>
