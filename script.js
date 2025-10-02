@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         {
             id: 7,
             title: 'Premium Silk Saree',
-            price: 3,499,
+            price: 3499,
             cat:'Women',
             sizes: ['S','M', 'L', 'XL'],
             colors: [
@@ -592,4 +592,5 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
 
 
 });
+
 
