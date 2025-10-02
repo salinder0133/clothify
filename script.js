@@ -80,6 +80,34 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             img: 'photos/kide/shorts-yellow.jpg',
             desc: 'Comfortable cotton shorts for kids.'
+        },
+        {
+            id: 6,
+            title: 'Sukoon Kurti',
+            price: 899,
+            cat:'Women',
+            sizes: ['M', 'L', 'XL'],
+            colors: [
+                { code: 'black', img: 'photos/women/kurti-black.jpg' },
+                { code: 'green', img: 'photos/women/kurti-green.jpg' },
+                { code: 'red', img: 'photos/women/kurti-red.jpg'}
+            ],
+            img: 'photos/women/kurti-black.jpg',
+            desc: 'Where comfort meets style — made for daily elegance.'
+        },
+        {
+            id: 7,
+            title: 'Premium Silk Saree',
+            price: '3,499',
+            cat:'Women',
+            sizes: ['S','M', 'L', 'XL'],
+            colors: [
+                { code: 'black', img: 'photos/women/saree-black.jpg' },
+                { code: 'green', img: 'photos/women/saree-green.jpg' },
+                { code: 'red', img: 'photos/women/saree-red.jpg'}
+            ],
+            img: 'photos/women/saree-black.jpg',
+            desc: 'Elegance that flows — for your special moments.'
         }
     ];
 
@@ -561,5 +589,6 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
             citySelect.appendChild(option);
         });
     }
+
 
 });
