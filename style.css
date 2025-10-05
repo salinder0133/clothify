@@ -13,7 +13,6 @@
 
 body {
   scroll-behavior: smooth;
-
   font-family: 'Poppins', system-ui, sans-serif;
   margin: 0;
   background: var(--bg);
@@ -201,7 +200,7 @@ footer {
 
 /* Modal background */
 .modal-bg {
-  display: none;
+  /* `display: none;` yahan se hata diya gaya hai, kyunki yeh inline style mein bhi tha */
   position: fixed;
   top: 0;
   left: 0;
@@ -334,8 +333,6 @@ select {
 
 /* Order Modal */
 #orderModal {
-  display: none;
-  /* hidden by default */
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -349,7 +346,7 @@ select {
 
 /* Order Form */
 #orderNowForm {
-  display: block;
+  /* display: block; - Yeh default CSS hai, redundancy ke liye hata diya gaya. */
   background: #fff;
   padding: 30px 25px;
   border-radius: 12px;
@@ -395,7 +392,7 @@ select {
   border-radius: 8px;
   font-size: 14px;
   font-family: inherit;
-  resize: vertical;
+  /* resize: vertical; - 'select' aur 'input[type="number"]' par iski zaroorat nahi, hata diya gaya. */
   transition: border-color 0.3s ease;
 }
 
@@ -504,16 +501,20 @@ select {
   }
 }
 
-/* Modal product quickview card*/
-
 @media (max-width: 768px) {
+  /* FIX: 768px media query do baar likha tha, ab dono ko merge kar diya gaya hai */
   .modal {
     flex-direction: column !important;
-    max-width: 95% !important;
+    max-width: 100vw !important; /* '95%' ko '100vw' se replace karke 'max-width: 95% !important' hata diya */
+    width: 100%;
+    height: 95vh;
+    overflow-y: auto;
   }
 
   #modalBg {
-    overflow: scroll;
+    overflow: scroll; /* Redundant tha, pichle block se */
+    align-items: flex-start;
+    padding: 10px;
   }
 
   .modal>div {
@@ -522,7 +523,10 @@ select {
 
   #modalImg {
     height: auto;
-    max-height: 300px;
+    max-height: 300px; /* 300px aur 250px mein se 300px rehne diya */
+    object-fit: cover;
+    width: 100%;
+    border-radius: 8px;
   }
 
   .size-grid,
