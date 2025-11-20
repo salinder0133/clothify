@@ -1,19 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // 🎨 Variable to hold the interval for image rotation
+    let imageCycleInterval;
+
     // Element references (Matched with your HTML IDs)
     const orderNowBtn = document.getElementById('orderNowBtn');
-    const orderNowForm = document.getElementById('orderNowForm'); 
+    const orderNowForm = document.getElementById('orderNowForm');
     const addToCartModal = document.getElementById('addToCartModal');
-    const quickOrderForm = document.getElementById('quickOrderForm'); 
-    const orderModal = document.getElementById('orderModal'); 
-    const modalBg = document.getElementById('modalBg'); 
+    const quickOrderForm = document.getElementById('quickOrderForm');
+    const orderModal = document.getElementById('orderModal');
+    const modalBg = document.getElementById('modalBg');
     const modalQty = document.getElementById('modalQty');
-    const showqtyElement = document.getElementById("showqty"); 
+    const showqtyElement = document.getElementById("showqty");
     const closeModalButton = document.getElementById('closeModal'); // Main modal close button
+    const modalImgElement = document.getElementById('modalImg'); // Image element reference
 
     // Variable to hold the product details selected in the modal for a Quick Order
     let currentQuickOrder = {};
 
-    // Sample product data (unchanged)
+    // 🔴 UPDATED: Product ID 1 has 'red' as the first color option now.
     const productsData = [
         {
             id: 1,
@@ -22,10 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Men',
             sizes: ['S', 'M', 'L', 'XL'],
             colors: [
-                { code: 'white', img: 'photos/men/shirt-white.jpg' },
-                { code: 'red', img: 'photos/men/shirt-red.jpg' }
+                // 🔴 CHANGE HERE: Red is now the default color/image for the card
+                { code: 'red', img: ['photos/men/shirt-red.jpg', 'photos/men/shirt-red1.jpg'] },
+                { code: 'white', img: ['photos/men/shirt-white.jpg', 'photos/men/shirt-white1.jpg'] }
             ],
-            img: 'photos/men/shirt-white.jpg',
+            img: 'photos/men/shirt-red.jpg', 
             desc: 'Premium cotton, regular fit. Care: Machine wash.'
         },
         {
@@ -35,8 +40,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Women',
             sizes: ['S', 'M', 'L'],
             colors: [
-                { code: 'blue', img: 'photos/women/Blue Denim Jacket-blue.jpg' },
-                { code: 'lightblue', img: 'photos/women/denim jacket-lightblue.jpg' }
+                { code: 'blue', img: ['photos/women/Denim Jacket-lightblue.jpg', 'photos/women/Denim Jacket-lightblue1.jpg'] },
+                { code: 'lightblue', img: ['photos/women/Blue denim jacket-blue.jpg', 'photos/women/Blue denim jacket-blue1.jpg'] }
             ],
             img: 'photos/women/Blue Denim Jacket-blue.jpg',
             desc: 'Denim jacket with soft lining.'
@@ -48,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Men',
             sizes: ['M', 'L', 'XL'],
             colors: [
-                { code: '#ef4444ff', img: 'photos/men/polo-red.jpg' },
-                { code: '#10b981', img: 'photos/men/polo-green.jpg' },
-                { code: '#0ea5a4', img: 'photos/men/polo-teal.jpg' }
+                { code: '#ef4444ff', img: ['photos/men/polo-red.jpg', 'photos/men/polo-red1.jpg'] },
+                { code: '#10b981', img: ['photos/men/polo-green.jpg', 'photos/men/polo-green1.jpg'] },
+                { code: '#0ea5a4', img: ['photos/men/polo-teal.jpg', 'photos/men/polo-teal1.jpg'] }
             ],
             img: 'photos/men/polo-red.jpg',
             desc: 'Breathable fabric, slim fit.'
@@ -62,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Women',
             sizes: ['S', 'M'],
             colors: [
-                { code: '#f97316', img: 'photos/women/dress-orange.jpg' },
-                { code: '#f43f5e', img: 'photos/women/dress-pink.jpg' }
+                { code: '#f97316ff', img: ['photos/women/dress-orange.jpg', 'photos/women/dress-orange1.jpg'] },
+                { code: '#f43f5e', img: ['photos/women/dress-pink.jpg', 'photos/women/dress-pink1.jpg'] }
             ],
             img: 'photos/women/dress-orange.jpg',
             desc: 'Lightweight fabric, perfect for summers.'
@@ -75,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Kids',
             sizes: ['S', 'M'],
             colors: [
-                { code: '#f59e0b', img: 'photos/kide/shorts-yellow.jpg' },
-                { code: '#06b6d4', img: 'photos/kide/shorts-blue.jpg' }
+                { code: '#f59e0b', img: ['photos/kide/shorts-yellow.jpg', 'photos/kide/shorts-yellow1.jpg'] },
+                { code: '#06b6d4', img: ['photos/kide/shorts-blue.jpg', 'photos/kide/shorts-blue1.jpg'] }
             ],
             img: 'photos/kide/shorts-yellow.jpg',
             desc: 'Comfortable cotton shorts for kids.'
@@ -85,12 +90,12 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 6,
             title: 'Sukoon Kurti',
             price: 899,
-            cat:'Women',
+            cat: 'Women',
             sizes: ['M', 'L', 'XL'],
             colors: [
-                { code: 'black', img: 'photos/women/kurti-black.jpg' },
-                { code: 'green', img: 'photos/women/kurti-green.jpg' },
-                { code: 'red', img: 'photos/women/kurti-red.jpg'}
+                { code: 'black', img: ['photos/women/kurti-black.jpg', 'photos/women/kurti-black1.jpg'] },
+                { code: 'green', img: ['photos/women/kurti-green.jpg', 'photos/women/kurti-green1.jpg'] },
+                { code: 'red', img: ['photos/women/kurti-red.jpg', 'photos/women/kurti-red1.jpg'] }
             ],
             img: 'photos/women/kurti-black.jpg',
             desc: 'Where comfort meets style — made for daily elegance.'
@@ -99,12 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
             id: 7,
             title: 'Premium Silk Saree',
             price: 3499,
-            cat:'Women',
-            sizes: ['S','M', 'L', 'XL'],
+            cat: 'Women',
+            sizes: ['S', 'M', 'L', 'XL'],
             colors: [
-                { code: 'black', img: 'photos/women/saree-black.jpg' },
-                { code: 'green', img: 'photos/women/saree-green.jpg' },
-                { code: 'red', img: 'photos/women/saree-red.jpg'}
+                { code: 'black', img: ['photos/women/saree-black.jpg', 'photos/women/saree-black1.jpg'] },
+                { code: 'green', img: ['photos/women/saree-green.jpg', 'photos/women/saree-green1.jpg'] },
+                { code: 'red', img: ['photos/women/saree-red.jpg', 'photos/women/saree-red1.jpg'] }
             ],
             img: 'photos/women/saree-black.jpg',
             desc: 'Elegance that flows — for your special moments.'
@@ -113,33 +118,61 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // Function to calculate and update total price
+    // 🖼️ NEW FUNCTION: To handle the image rotation logic
+    function startImageRotation(imageArray, imgElement) {
+        // Stop any existing rotation
+        if (imageCycleInterval) {
+            clearInterval(imageCycleInterval);
+        }
+
+        // Convert to array if it's a single string for consistency (for other products)
+        const images = Array.isArray(imageArray) ? imageArray : [imageArray];
+
+        if (images.length < 2) {
+            // Only one image, just display it and stop the function
+            imgElement.src = images[0] || '';
+            return;
+        }
+
+        let currentIndex = 0;
+
+        // Initial image display
+        imgElement.src = images[currentIndex];
+
+        imageCycleInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % images.length;
+            imgElement.src = images[currentIndex];
+        }, 2000); //time chnge kr skte hai photo ka
+    }
+    // -------------------------------------------------------
+
+    // Function to calculate and update total price (unchanged)
     function updatePriceBasedOnSelection() {
-        const basePrice = Number(currentQuickOrder.price); 
-        
+        const basePrice = Number(currentQuickOrder.price);
+
         if (!basePrice || isNaN(basePrice)) {
-            document.getElementById('Total').textContent = 'Total: ₹0'; 
+            document.getElementById('Total').textContent = 'Total: ₹0';
             currentQuickOrder.total = 0;
-            return; 
+            return;
         }
 
         const qty = Number(modalQty.value) || 1;
         const total = basePrice * qty;
-        
-        document.getElementById('Total').textContent = 'Total: ₹' + total; 
+
+        document.getElementById('Total').textContent = 'Total: ₹' + total;
 
         // Update the currentQuickOrder object attributes
         const selectedSize = [...document.querySelectorAll('#modalSizes .size')].find(s => s.dataset.selected === '1');
         const selectedColor = [...document.querySelectorAll('#modalSwatches .swatch')].find(s => s.classList.contains('selected'));
 
         currentQuickOrder.qty = qty;
-        currentQuickOrder.total = total; 
+        currentQuickOrder.total = total;
         currentQuickOrder.size = selectedSize ? selectedSize.textContent : null;
         currentQuickOrder.color = selectedColor ? selectedColor.style.background : null;
-        
+
         // If the order form is visible, update its display immediately
         if (showqtyElement && orderModal.style.display === 'flex' && currentQuickOrder.title) {
-             showqtyElement.innerHTML = `
+            showqtyElement.innerHTML = `
                 ${currentQuickOrder.qty} x ${currentQuickOrder.title} 
                 <br>Size: ${currentQuickOrder.size} 
                 <br>Color: <span style="display:inline-block;width:12px;height:12px;background:${currentQuickOrder.color};border:1px solid #ccc;border-radius:2px;"></span>
@@ -159,8 +192,11 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = 'product';
             div.dataset.id = p.id;
 
+            // Find the primary image for the card display
+            const primaryImg = Array.isArray(p.colors[0].img) ? p.colors[0].img[0] : p.colors[0].img;
+
             div.innerHTML = `
-                <img src="${p.img}" alt="${p.title}">
+                <img src="${primaryImg}" alt="${p.title}">
                 <div class="p-title">${p.title}</div>
                 <div class="meta">${p.cat} • ${p.sizes.join('/')}</div>
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
@@ -194,20 +230,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Open product modal and setup selections
+    // Open product modal and setup selections (MODIFIED)
     function openModal(id) {
         const p = productsData.find(x => x.id === id);
         if (!p) return;
 
-        // Initialize currentQuickOrder with price (Crucial for NaN fix)
+        // 🛑 NEW: Clear existing interval before setting up a new modal 
+        if (imageCycleInterval) {
+            clearInterval(imageCycleInterval);
+        }
+        // -----------------------------------------------------------------
+
+        // Initialize currentQuickOrder with price 
         currentQuickOrder = {
             id: p.id,
             title: p.title,
-            price: p.price, 
-            qty: 1, 
+            price: p.price,
+            qty: 1,
             size: p.sizes[0] || null,
             color: p.colors[0] ? p.colors[0].code : null,
-            total: p.price 
+            total: p.price
         };
 
         // Set modal content
@@ -227,19 +269,23 @@ document.addEventListener('DOMContentLoaded', () => {
             d.onclick = () => {
                 document.querySelectorAll('#modalSwatches .swatch').forEach(s => s.classList.remove('selected'));
                 d.classList.add('selected');
-                document.getElementById('modalImg').src = c.img;
+
+                // 🖼️ NEW LOGIC: Start image rotation on color selection
+                startImageRotation(c.img, modalImgElement);
+
                 currentQuickOrder.color = c.code;
-                updatePriceBasedOnSelection(); 
+                updatePriceBasedOnSelection();
             };
 
             if (i === 0) {
                 d.classList.add('selected');
-                document.getElementById('modalImg').src = c.img;
+                // 🖼️ NEW LOGIC: Start image rotation for the default color
+                startImageRotation(c.img, modalImgElement);
             }
             s.appendChild(d);
         });
 
-        // Setup sizes
+        // Setup sizes (unchanged)
         const sz = document.getElementById('modalSizes');
         sz.innerHTML = '';
         p.sizes.forEach((szv, i) => {
@@ -266,10 +312,10 @@ document.addEventListener('DOMContentLoaded', () => {
             sz.appendChild(d);
         });
 
-        // Quantity setup & listener for price update
+        // Quantity setup & listener for price update (unchanged)
         modalQty.value = 1;
         modalQty.min = 1;
-        modalQty.oninput = () => updatePriceBasedOnSelection(); 
+        modalQty.oninput = () => updatePriceBasedOnSelection();
 
         modalBg.style.display = 'flex';
         addToCartModal.dataset.id = id;
@@ -281,21 +327,27 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePriceBasedOnSelection(); // Initial calculation
     }
 
-    // Function to reload the page
+    // Function to reload the page (MODIFIED: Clears interval)
     function reloadPage() {
+        if (imageCycleInterval) {
+            clearInterval(imageCycleInterval);
+        }
         window.location.reload();
     }
-    
-    // Close modal & reset
+
+    // Close modal & reset (MODIFIED: Clears interval)
     function closeModalReset() {
+        if (imageCycleInterval) {
+            clearInterval(imageCycleInterval);
+        }
         modalBg.style.display = 'none';
         resetOrderUI();
     }
-    
-    // ✅ Main modal close button will now RELOAD the page
+
+    // Main modal close button will now RELOAD the page
     if (closeModalButton) {
         closeModalButton.addEventListener('click', () => {
-            reloadPage(); 
+            reloadPage();
         });
     }
 
@@ -347,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const metaParts = [];
                 if (item.size) metaParts.push('Size: ' + item.size);
-                if (item.color) metaParts.push('Color: ' + item.color); 
+                if (item.color) metaParts.push('Color: ' + item.color);
                 metaParts.push('Qty: ' + item.qty);
 
                 row.innerHTML = `
@@ -363,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 el.appendChild(row);
                 total += item.price * item.qty;
             });
-            
+
             document.querySelectorAll('.cart-item-title').forEach(title => {
                 title.onclick = () => {
                     const id = +title.dataset.id;
@@ -373,12 +425,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         document.getElementById('cartTotal').textContent = '₹' + total;
-        
+
         const checkoutBtn = document.getElementById('checkoutBtn');
         if (checkoutBtn) {
             checkoutBtn.disabled = cart.length === 0;
         }
-        
+
         document.getElementById('cartCount').innerText = cart.length;
 
         localStorage.setItem("cart", JSON.stringify(cart));
@@ -389,10 +441,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (clearCartBtn) {
         clearCartBtn.addEventListener('click', () => {
             cart = [];
-            localStorage.removeItem("cart"); 
+            localStorage.removeItem("cart");
             renderCart();
-            
-            alert('Cart has been cleared!'); 
+
+            alert('Cart has been cleared!');
         });
     }
 
@@ -433,10 +485,10 @@ document.addEventListener('DOMContentLoaded', () => {
     renderProducts(productsData);
     renderCart();
 
-    // Escape key closes modal -> Reload page
+    // Escape key closes modal -> Reload page (MODIFIED: Clears interval)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modalBg.style.display === 'flex') {
-            reloadPage(); 
+            reloadPage();
         }
     });
 
@@ -463,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkoutBtn) {
         checkoutBtn.onclick = () => {
             document.getElementById('cartDrawer').style.display = 'none';
-            const checkoutElement = document.getElementById('checkout'); 
+            const checkoutElement = document.getElementById('checkout');
             if (checkoutElement) {
                 checkoutElement.style.display = 'block';
             } else {
@@ -472,7 +524,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Order Now button click - show order form modal
+    // Order Now button click - show order form modal (unchanged)
     orderNowBtn.addEventListener('click', () => {
         const selectedSize = [...document.querySelectorAll('#modalSizes .size')].find(s => s.dataset.selected === '1');
         const selectedColor = [...document.querySelectorAll('#modalSwatches .swatch')].find(s => s.classList.contains('selected'));
@@ -487,7 +539,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuickOrder.color = selectedColor.style.background;
         currentQuickOrder.qty = +modalQty.value;
         currentQuickOrder.total = currentQuickOrder.qty * currentQuickOrder.price;
-        
+
         // Update the display for the quantity and details inside the order form
         if (showqtyElement) {
             showqtyElement.innerHTML = `
@@ -497,7 +549,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <br><strong>Total: ₹${currentQuickOrder.total}</strong>
             `;
         }
-        
+
         // Show the order form modal, and hide the quickview buttons
         orderModal.style.display = 'flex';
         orderNowForm.style.display = 'block';
@@ -505,7 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
         orderNowBtn.style.display = 'none';
     });
 
-    // Handle order form submission -> Reload page
+    // Handle order form submission -> Reload page (unchanged)
     quickOrderForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
@@ -528,28 +580,27 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
         `;
 
         alert(`Order placed successfully! ${finalOrder}`);
-        
-        // ✅ After successful order, RELOAD the page
+
+        // After successful order, RELOAD the page
         reloadPage();
     });
 
-    // Close order modal when clicking outside the form -> Reload page
+    // Close order modal when clicking outside the form -> Reload page (unchanged)
     orderModal.addEventListener('click', (e) => {
         if (e.target === orderModal) {
-            // ✅ When clicking outside the order form, RELOAD the page
+            // When clicking outside the order form, RELOAD the page
             reloadPage();
         }
     });
 
-    // Reset order form & modal UI (This function is now less critical as we reload, but kept for clarity)
+    // Reset order form & modal UI (unchanged)
     function resetOrderUI() {
-        // This function is now mainly for visual cleanup before reload.
         orderNowForm.style.display = 'none';
         addToCartModal.style.display = 'inline-block';
         orderNowBtn.style.display = 'inline-block';
         quickOrderForm.reset();
         orderModal.style.display = 'none';
-        currentQuickOrder = {}; 
+        currentQuickOrder = {};
     }
 
     // Populate state dropdown (unchanged)
@@ -590,7 +641,4 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
         });
     }
 
-
 });
-
-
