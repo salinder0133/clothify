@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Women',
             sizes: ['S', 'M', 'L'],
             colors: [
-                { code: 'blue', img: ['photos/women/Denim-Jacket-lightblue.jpg', 'photos/women/Denim-Jacket-lightblue1.jpg'] },
-                { code: 'lightblue', img: ['photos/women/Blue-denim-jacket-blue.jpg', 'photos/women/Blue-denim-jacket-blue1.jpg'] }
+                { code: 'blue', img: ['photos/women/Jacket-lightblue.jpg', 'photos/women/Jacket-lightblue1.jpg'] },
+                { code: 'lightblue', img: ['photos/women/jacket-blue.jpg', 'photos/women/jacket-blue1.jpg'] }
             ],
-            img: 'photos/women/Blue-Denim-Jacket-blue.jpg',
+            img: 'photos/women/Jacket-blue.jpg',
             desc: 'Denim jacket with soft lining.'
         },
         {
@@ -642,4 +642,5 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
     }
 
 });
+
 
