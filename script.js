@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Men',
             sizes: ['S', 'M', 'L', 'XL'],
             colors: [
-                // 🔴 CHANGE HERE: Red is now the default color/image for the card
+                
                 { code: 'red', img: ['photos/men/shirt-red.jpg', 'photos/men/shirt-red1.jpg'] },
                 { code: 'white', img: ['photos/men/shirt-white.jpg', 'photos/men/shirt-white1.jpg'] }
             ],
@@ -40,10 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Women',
             sizes: ['S', 'M', 'L'],
             colors: [
-                { code: 'blue', img: ['photos/women/Denim Jacket-lightblue.jpg', 'photos/women/Denim Jacket-lightblue1.jpg'] },
-                { code: 'lightblue', img: ['photos/women/Blue denim jacket-blue.jpg', 'photos/women/Blue denim jacket-blue1.jpg'] }
+                { code: 'blue', img: ['photos/women/Denim-Jacket-lightblue.jpg', 'photos/women/Denim-Jacket-lightblue1.jpg'] },
+                { code: 'lightblue', img: ['photos/women/Blue-denim-jacket-blue.jpg', 'photos/women/Blue-denim-jacket-blue1.jpg'] }
             ],
-            img: 'photos/women/Blue Denim Jacket-blue.jpg',
+            img: 'photos/women/Blue-Denim-Jacket-blue.jpg',
             desc: 'Denim jacket with soft lining.'
         },
         {
@@ -642,3 +642,4 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
     }
 
 });
+
