@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clothify — Order Demo</title>
+  <title>Clothify — Order </title>
 
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -13,7 +13,7 @@
   <header>
     <div class="wrap top">
       <div class="logo">Clothify</div>
-      <div style="margin-left:12px;color:var(--muted);font-size:13px">Kapde ki shopping - demo</div>
+      <div style="margin-left:12px;color:var(--muted);font-size:13px">Kapde ki shopping</div>
       <nav>
         <a href="#">Home</a>
         <a href="#catalog">Catalog</a>
@@ -111,15 +111,22 @@
       <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap: 8px;">
         <strong>Total: <span id="cartTotal">₹0</span></strong>
 
-        <button id="clearCartBtn" class="primary">Clear</button>
+        <div style="display:flex; gap: 8px;">
+          <button id="clearCartBtn" class="primary">Clear</button>
+          <button id="checkoutBtn" class="primary" disabled>Proceed</button>
+        </div>
       </div>
-
     </div>
 
-   <div id="modalBg" class="modal-bg" style="display:none; align-items: center; justify-content: center;">
+    <div id="modalBg" class="modal-bg" style="display:none; align-items: center; justify-content: center;">
       <div class="modal" role="dialog" aria-modal="true" style="display: flex; gap: 20px; max-width: 900px;">
         <div class="modal-img-scroll" style="flex:1;">
+          <div id="modal-main-image-container" class="modal-main-image-container">
             <img id="modalImg" src="" alt="product" />
+          </div>
+
+          <div id="modal-image-previewer" class="modal-image-previewer">
+          </div>
         </div>
 
         <div style="flex: 1; display: flex; flex-direction: column;">
@@ -222,6 +229,5 @@
 
   <script src="script.js"></script>
 </body>
-
 
 </html>
