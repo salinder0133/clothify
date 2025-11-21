@@ -11,13 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalBg = document.getElementById('modalBg');
     const modalQty = document.getElementById('modalQty');
     const showqtyElement = document.getElementById("showqty");
-    const closeModalButton = document.getElementById('closeModal'); // Main modal close button
-    const modalImgElement = document.getElementById('modalImg'); // Image element reference
+    const closeModalButton = document.getElementById('closeModal');
+    const modalImgElement = document.getElementById('modalImg');
+
+    // 🖼️ NEW ELEMENT REFERENCES FOR GALLERY
+    const modalImagePreviewer = document.getElementById('modal-image-previewer');
+
+    // 🛒 NEW ELEMENT REFERENCE FOR CHECKOUT
+    const checkoutBtn = document.getElementById('checkoutBtn');
 
     // Variable to hold the product details selected in the modal for a Quick Order
     let currentQuickOrder = {};
 
-    // 🔴 UPDATED: Product ID 1 has 'red' as the first color option now.
     const productsData = [
         {
             id: 1,
@@ -26,11 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Men',
             sizes: ['S', 'M', 'L', 'XL'],
             colors: [
-                
                 { code: 'red', img: ['photos/men/shirt-red.jpg', 'photos/men/shirt-red1.jpg'] },
                 { code: 'white', img: ['photos/men/shirt-white.jpg', 'photos/men/shirt-white1.jpg'] }
             ],
-            img: 'photos/men/shirt-red.jpg', 
+            img: 'photos/men/shirt-red.jpg',
             desc: 'Premium cotton, regular fit. Care: Machine wash.'
         },
         {
@@ -41,9 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
             sizes: ['S', 'M', 'L'],
             colors: [
                 { code: 'blue', img: ['photos/women/Jacket-lightblue.jpg', 'photos/women/Jacket-lightblue1.jpg'] },
-                { code: 'lightblue', img: ['photos/women/Jacket-blue.jpg', 'photos/women/Jacket-blue1.jpg'] }
+                { code: 'lightblue', img: ['photos/women/jacket-blue.jpg', 'photos/women/jacket-blue1.jpg'] }
             ],
-            img: 'photos/women/Jacket-lightblue.jpg',
+            img: 'photos/women/Jacket-blue.jpg',
             desc: 'Denim jacket with soft lining.'
         },
         {
@@ -53,9 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Men',
             sizes: ['M', 'L', 'XL'],
             colors: [
-                { code: '#ef4444ff', img: ['photos/men/polo-red.jpg', 'photos/men/polo-red1.jpg'] },
-                { code: '#10b981', img: ['photos/men/polo-green.jpg', 'photos/men/polo-green1.jpg'] },
-                { code: '#0ea5a4', img: ['photos/men/polo-teal.jpg', 'photos/men/polo-teal1.jpg'] }
+                { code: 'Red', img: ['photos/men/polo-red.jpg', 'photos/men/polo-red1.jpg'] },
+                { code: 'green', img: ['photos/men/polo-green.jpg', 'photos/men/polo-green1.jpg'] },
+                { code: 'Blue', img: ['photos/men/polo-teal.jpg', 'photos/men/polo-teal1.jpg'] }
             ],
             img: 'photos/men/polo-red.jpg',
             desc: 'Breathable fabric, slim fit.'
@@ -67,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Women',
             sizes: ['S', 'M'],
             colors: [
-                { code: '#f97316ff', img: ['photos/women/dress-orange.jpg', 'photos/women/dress-orange1.jpg'] },
-                { code: '#f43f5e', img: ['photos/women/dress-pink.jpg', 'photos/women/dress-pink1.jpg'] }
+                { code: 'orange', img: ['photos/women/dress-orange.jpg', 'photos/women/dress-orange1.jpg'] },
+                { code: 'pink', img: ['photos/women/dress-pink.jpg', 'photos/women/dress-pink1.jpg'] }
             ],
             img: 'photos/women/dress-orange.jpg',
             desc: 'Lightweight fabric, perfect for summers.'
@@ -80,10 +84,10 @@ document.addEventListener('DOMContentLoaded', () => {
             cat: 'Kids',
             sizes: ['S', 'M'],
             colors: [
-                { code: '#f59e0b', img: ['photos/kide/shorts-yellow.jpg', 'photos/kide/shorts-yellow1.jpg'] },
-                { code: '#06b6d4', img: ['photos/kide/shorts-blue.jpg', 'photos/kide/shorts-blue1.jpg'] }
+                { code: 'yellow', img: ['photos/kide/shorts-yellow.jpg', 'photos/kide/shorts-yellow1.jpg'] },
+                { code: 'blue', img: ['photos/kide/shorts-blue.jpg', 'photos/kide/shorts-blue1.jpg'] }
             ],
-            img: 'photos/kide/shorts-yellow.jpg',
+            img: 'photos/kids/shorts-yellow.jpg',
             desc: 'Comfortable cotton shorts for kids.'
         },
         {
@@ -113,40 +117,98 @@ document.addEventListener('DOMContentLoaded', () => {
             ],
             img: 'photos/women/saree-black.jpg',
             desc: 'Elegance that flows — for your special moments.'
-        }
+        },
+        {
+            id: 8,
+            title: 'High-Waist Black Jeans',
+            price: 1899,
+            cat: 'Women',
+            sizes: ['S', 'M', 'L'],
+            colors: [
+                { code: 'Black', img: ['photos/women/jeans-black.jpg', 'photos/women/jeans-black-detail.jpg'] },
+                { code: 'Grey', img: ['photos/women/jeans-grey.jpg', 'photos/women/jeans-grey1.jpg'] }
+            ],
+            img: 'photos/women/jeans-black.jpg',
+            desc: 'Stretchable denim with a comfortable high-waist fit. A wardrobe essential.'
+        },
+        {
+            id: 9,
+            title: 'Kids Rainbow Dress',
+            price: 749,
+            cat: 'Kids',
+            sizes: ['S', 'M', 'L'],
+            colors: [
+                { code: '#FFC0CB', img: ['photos/kide/dress-rainbow.jpg', 'photos/kide/dress-rainbow-detail.jpg'] },
+                { code: '#F08080', img: ['photos/kide/dress-pink.jpg', 'photos/kide/dress-pink-side.jpg'] }
+            ],
+            img: 'photos/kide/dress-rainbow.jpg',
+            desc: 'Flowy summer dress with light, breathable inner lining.'
+        },
     ];
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    // 🖼️ NEW FUNCTION: To handle the image rotation logic
+    // 🖼️ Function to handle the image rotation logic
     function startImageRotation(imageArray, imgElement) {
-        // Stop any existing rotation
         if (imageCycleInterval) {
             clearInterval(imageCycleInterval);
         }
 
-        // Convert to array if it's a single string for consistency (for other products)
         const images = Array.isArray(imageArray) ? imageArray : [imageArray];
 
         if (images.length < 2) {
-            // Only one image, just display it and stop the function
             imgElement.src = images[0] || '';
             return;
         }
 
         let currentIndex = 0;
-
-        // Initial image display
         imgElement.src = images[currentIndex];
 
         imageCycleInterval = setInterval(() => {
             currentIndex = (currentIndex + 1) % images.length;
             imgElement.src = images[currentIndex];
-        }, 2000); //time chnge kr skte hai photo ka
+        }, 2000);
     }
     // -------------------------------------------------------
 
-    // Function to calculate and update total price (unchanged)
+    // 🖼️ Function that renders the thumbnail gallery
+    function renderImageGallery(imageArray, mainImgElement) {
+        modalImagePreviewer.innerHTML = '';
+
+        imageArray.forEach((imageUrl, index) => {
+            const thumbnail = document.createElement('img');
+            thumbnail.src = imageUrl;
+            thumbnail.alt = `Product view ${index + 1}`;
+            thumbnail.className = 'thumbnail';
+
+            if (index === 0) {
+                thumbnail.classList.add('active');
+            }
+
+            thumbnail.addEventListener('click', (e) => {
+                if (imageCycleInterval) {
+                    clearInterval(imageCycleInterval);
+                }
+
+                mainImgElement.src = imageUrl;
+
+                document.querySelectorAll('#modal-image-previewer .thumbnail').forEach(img => {
+                    img.classList.remove('active');
+                });
+                e.target.classList.add('active');
+            });
+
+            modalImagePreviewer.appendChild(thumbnail);
+        });
+
+        if (imageArray.length > 0) {
+            mainImgElement.src = imageArray[0];
+        }
+    }
+    // -------------------------------------------------------
+
+
+    // Function to calculate and update total price
     function updatePriceBasedOnSelection() {
         const basePrice = Number(currentQuickOrder.price);
 
@@ -161,7 +223,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('Total').textContent = 'Total: ₹' + total;
 
-        // Update the currentQuickOrder object attributes
         const selectedSize = [...document.querySelectorAll('#modalSizes .size')].find(s => s.dataset.selected === '1');
         const selectedColor = [...document.querySelectorAll('#modalSwatches .swatch')].find(s => s.classList.contains('selected'));
 
@@ -170,7 +231,6 @@ document.addEventListener('DOMContentLoaded', () => {
         currentQuickOrder.size = selectedSize ? selectedSize.textContent : null;
         currentQuickOrder.color = selectedColor ? selectedColor.style.background : null;
 
-        // If the order form is visible, update its display immediately
         if (showqtyElement && orderModal.style.display === 'flex' && currentQuickOrder.title) {
             showqtyElement.innerHTML = `
                 ${currentQuickOrder.qty} x ${currentQuickOrder.title} 
@@ -181,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Render all products on page (unchanged)
+    // Render all products on page
     function renderProducts(list) {
         const el = document.getElementById('products');
         el.innerHTML = '';
@@ -192,7 +252,6 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = 'product';
             div.dataset.id = p.id;
 
-            // Find the primary image for the card display
             const primaryImg = Array.isArray(p.colors[0].img) ? p.colors[0].img[0] : p.colors[0].img;
 
             div.innerHTML = `
@@ -212,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         attachProductEvents();
     }
 
-    // Add event listeners to product buttons & cards (unchanged)
+    // Add event listeners to product buttons & cards
     function attachProductEvents() {
         document.querySelectorAll('.quick').forEach(btn => {
             btn.onclick = (e) => {
@@ -230,16 +289,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Open product modal and setup selections (MODIFIED)
+    // Open product modal and setup selections
     function openModal(id) {
         const p = productsData.find(x => x.id === id);
         if (!p) return;
 
-        // 🛑 NEW: Clear existing interval before setting up a new modal 
         if (imageCycleInterval) {
             clearInterval(imageCycleInterval);
         }
-        // -----------------------------------------------------------------
 
         // Initialize currentQuickOrder with price 
         currentQuickOrder = {
@@ -257,6 +314,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modalPrice').textContent = '₹' + p.price;
         document.getElementById('modalDesc').textContent = p.desc;
 
+        modalImagePreviewer.innerHTML = '';
+
+
         // Setup swatches (colors)
         const s = document.getElementById('modalSwatches');
         s.innerHTML = '';
@@ -270,8 +330,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelectorAll('#modalSwatches .swatch').forEach(s => s.classList.remove('selected'));
                 d.classList.add('selected');
 
-                // 🖼️ NEW LOGIC: Start image rotation on color selection
                 startImageRotation(c.img, modalImgElement);
+                renderImageGallery(c.img, modalImgElement);
 
                 currentQuickOrder.color = c.code;
                 updatePriceBasedOnSelection();
@@ -279,13 +339,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (i === 0) {
                 d.classList.add('selected');
-                // 🖼️ NEW LOGIC: Start image rotation for the default color
                 startImageRotation(c.img, modalImgElement);
+                renderImageGallery(c.img, modalImgElement);
             }
             s.appendChild(d);
         });
 
-        // Setup sizes (unchanged)
+        // Setup sizes
         const sz = document.getElementById('modalSizes');
         sz.innerHTML = '';
         p.sizes.forEach((szv, i) => {
@@ -312,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sz.appendChild(d);
         });
 
-        // Quantity setup & listener for price update (unchanged)
+        // Quantity setup & listener for price update
         modalQty.value = 1;
         modalQty.min = 1;
         modalQty.oninput = () => updatePriceBasedOnSelection();
@@ -324,10 +384,10 @@ document.addEventListener('DOMContentLoaded', () => {
         addToCartModal.style.display = 'inline-block';
         orderNowForm.style.display = 'none';
 
-        updatePriceBasedOnSelection(); // Initial calculation
+        updatePriceBasedOnSelection();
     }
 
-    // Function to reload the page (MODIFIED: Clears interval)
+    // Function to reload the page
     function reloadPage() {
         if (imageCycleInterval) {
             clearInterval(imageCycleInterval);
@@ -335,7 +395,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.reload();
     }
 
-    // Close modal & reset (MODIFIED: Clears interval)
+    // Close modal & reset
     function closeModalReset() {
         if (imageCycleInterval) {
             clearInterval(imageCycleInterval);
@@ -351,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Add to cart button inside modal (unchanged logic)
+    // Add to cart button inside modal
     addToCartModal.onclick = function () {
         const id = +this.dataset.id;
         const qty = +modalQty.value || 1;
@@ -364,11 +424,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         addToCart(id, qty, selectedSize.textContent, selectedColor.style.background);
-        // After adding to cart, reload the page to refresh modal state
         reloadPage();
     };
 
-    // Add to cart logic (unchanged)
+    // Add to cart logic
     function addToCart(id, qty, size = null, color = null) {
         const p = productsData.find(x => x.id === id);
         if (!p) return;
@@ -382,14 +441,14 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCart();
     }
 
-    // Render cart items on sidebar/drawer (unchanged)
+    // Render cart items on sidebar/drawer
     function renderCart() {
         const el = document.getElementById('cartItems');
         el.innerHTML = '';
         let total = 0;
 
         if (cart.length === 0) {
-            el.innerHTML = '<p style="color:#777">Cart khali hai.</p>';
+            el.innerHTML = '<p style="color:#777">"The cart is empty." 🛒.</p>';
         } else {
             cart.forEach(item => {
                 const row = document.createElement('div');
@@ -426,17 +485,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('cartTotal').textContent = '₹' + total;
 
-        const checkoutBtn = document.getElementById('checkoutBtn');
+        // 🛒 Checkout Button Logic
         if (checkoutBtn) {
             checkoutBtn.disabled = cart.length === 0;
+            checkoutBtn.style.backgroundColor = cart.length > 0 ? 'var(--accent)' : '#ccc';
         }
+        // -----------------------
 
         document.getElementById('cartCount').innerText = cart.length;
 
         localStorage.setItem("cart", JSON.stringify(cart));
     }
 
-    // Clear cart button functionality (unchanged)
+    // Clear cart button functionality
     const clearCartBtn = document.getElementById('clearCartBtn');
     if (clearCartBtn) {
         clearCartBtn.addEventListener('click', () => {
@@ -449,7 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Filtering and sorting products (unchanged)
+    // Filtering and sorting products
     function applyFilters() {
         const q = document.getElementById('search').value.toLowerCase();
         const cats = Array.from(document.querySelectorAll('.cat:checked')).map(x => x.value);
@@ -474,25 +535,25 @@ document.addEventListener('DOMContentLoaded', () => {
         renderProducts(list);
     }
 
-    // Event listeners for filters & search (unchanged)
+    // Event listeners for filters & search
     document.getElementById('searchBtn').onclick = () => applyFilters();
     document.querySelectorAll('.cat, .sizeFilter').forEach(i => i.onchange = () => applyFilters());
     document.getElementById('applyPriceFilter').onclick = () => applyFilters();
     document.getElementById('sort').onchange = () => applyFilters();
     document.getElementById('search').addEventListener('input', () => applyFilters());
 
-    // Initial render (unchanged)
+    // Initial render
     renderProducts(productsData);
     renderCart();
 
-    // Escape key closes modal -> Reload page (MODIFIED: Clears interval)
+    // Escape key closes modal
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modalBg.style.display === 'flex') {
             reloadPage();
         }
     });
 
-    // Close cart drawer if clicked outside (unchanged)
+    // Close cart drawer if clicked outside
     document.addEventListener('click', (e) => {
         const cd = document.getElementById('cartDrawer');
         const ob = document.getElementById('openCart');
@@ -501,7 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Open cart drawer (unchanged)
+    // Open cart drawer
     document.getElementById('openCart').onclick = () => {
         const cd = document.getElementById('cartDrawer');
         if (cd) {
@@ -510,17 +571,75 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Checkout button click (unchanged)
-    const checkoutBtn = document.getElementById('checkoutBtn');
+    // 🛒 NEW FUNCTION: Opens the Order Form directly from the Cart Drawer
+    function openCartCheckoutForm() {
+        if (cart.length === 0) return;
+
+        // 1. Calculate combined total and summary text
+        let total = 0;
+        let summaryHtml = '';
+
+        cart.forEach((item, index) => {
+            const itemTotal = item.price * item.qty;
+            total += itemTotal;
+
+            let colorDisplay = item.color;
+
+            summaryHtml += `
+                <p style="margin: 5px 0; font-size: 14px;">
+                    ${index + 1}. <strong>${item.title}</strong>
+                    (Qty: ${item.qty}, Size: ${item.size})
+                    <br>
+                    <span style="display:inline-block; margin-left: 15px;">
+                        Color: 
+                        <span style="
+                            display: inline-block;
+                            width: 18px; /* Size increased slightly for better visibility */
+                            height: 18px;
+                            background: ${colorDisplay}; 
+                            border: 1px solid #aaa;
+                            border-radius: 10px; /* 👈 UPDATED BORDER-RADIUS TO 10px (for roundness) */
+                            vertical-align: middle;
+                        "></span> 
+                        (${colorDisplay}) 
+                    </span>
+                    — Subtotal: ₹${itemTotal}
+                </p>
+            `;
+        });
+
+        // 2. Hide cart drawer and show the order modal/form
+        document.getElementById('cartDrawer').style.display = 'none';
+
+        // Use ModalBG to display the form
+        document.getElementById('modalBg').style.display = 'flex';
+        orderModal.style.display = 'flex';
+        orderNowForm.style.display = 'block';
+
+        // Hide Add to Cart/Order Now buttons 
+        addToCartModal.style.display = 'none';
+        orderNowBtn.style.display = 'none';
+
+        // 3. Populate the order form details (`#showqty`)
+        if (showqtyElement) {
+            showqtyElement.innerHTML = `
+                <h4 style="margin-bottom: 5px;">Items to be Ordered:</h4>
+                <div style="border: 1px solid #eee; padding: 10px; border-radius: 6px; max-height: 150px; overflow-y: auto;">
+                    ${summaryHtml}
+                </div>
+                <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+                <strong>GRAND TOTAL: ₹${total}</strong>
+            `;
+        }
+
+        // Store total for order form submission reference
+        currentQuickOrder = { cartCheckout: true, total: total };
+    }
+
+    // 🛒 Checkout button click (NEW LOGIC)
     if (checkoutBtn) {
         checkoutBtn.onclick = () => {
-            document.getElementById('cartDrawer').style.display = 'none';
-            const checkoutElement = document.getElementById('checkout');
-            if (checkoutElement) {
-                checkoutElement.style.display = 'block';
-            } else {
-                alert('No checkout page defined!');
-            }
+            openCartCheckoutForm();
         };
     }
 
@@ -534,7 +653,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Finalize order details before showing form
+        // Finalize order details before showing form (Single Item Logic)
         currentQuickOrder.size = selectedSize.textContent;
         currentQuickOrder.color = selectedColor.style.background;
         currentQuickOrder.qty = +modalQty.value;
@@ -557,20 +676,46 @@ document.addEventListener('DOMContentLoaded', () => {
         orderNowBtn.style.display = 'none';
     });
 
-    // Handle order form submission -> Reload page (unchanged)
+    // Handle order form submission 
     quickOrderForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const orderDetails = Object.fromEntries(formData.entries());
 
-        let finalOrder = `
-Order Placed:
+        let finalOrderText = "";
+        let finalTotal = currentQuickOrder.total;
+
+        if (currentQuickOrder.cartCheckout) {
+            // Logic for multi-item cart checkout
+            let cartItemsDetail = cart.map(item =>
+                `Item: ${item.title} (Size: ${item.size}, Qty: ${item.qty}, Price: ${item.price * item.qty})`
+            ).join('\n');
+
+            finalOrderText = `
+Order Placed (CART CHECKOUT):
+Total Items: ${cart.length}
+TOTAL: ₹${finalTotal}
+
+--- Items ---
+${cartItemsDetail}
+            `;
+            // Clear cart after successful submission
+            cart = [];
+            localStorage.removeItem("cart");
+
+        } else {
+            // Logic for single item 'Order Now'
+            finalOrderText = `
+Order Placed (SINGLE ITEM):
 Product: ${currentQuickOrder.title}
 Size: ${currentQuickOrder.size}
 Color: ${currentQuickOrder.color}
 Quantity: ${currentQuickOrder.qty}
 TOTAL: ₹${currentQuickOrder.total}
+            `;
+        }
 
+        let customerDetails = `
 --- Customer Details ---
 Name: ${orderDetails.fullname}
 Mobile: ${orderDetails.mobile}
@@ -579,21 +724,20 @@ Address: ${orderDetails.address}, ${orderDetails.city}, ${orderDetails.state} - 
 Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment'}
         `;
 
-        alert(`Order placed successfully! ${finalOrder}`);
+        alert(`Order placed successfully! ${finalOrderText}\n${customerDetails}`);
 
         // After successful order, RELOAD the page
         reloadPage();
     });
 
-    // Close order modal when clicking outside the form -> Reload page (unchanged)
+    // Close order modal when clicking outside the form
     orderModal.addEventListener('click', (e) => {
         if (e.target === orderModal) {
-            // When clicking outside the order form, RELOAD the page
             reloadPage();
         }
     });
 
-    // Reset order form & modal UI (unchanged)
+    // Reset order form & modal UI
     function resetOrderUI() {
         orderNowForm.style.display = 'none';
         addToCartModal.style.display = 'inline-block';
@@ -603,7 +747,7 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
         currentQuickOrder = {};
     }
 
-    // Populate state dropdown (unchanged)
+    // Populate state dropdown 
     const states = [
         "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
         "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
@@ -623,7 +767,7 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
         });
     }
 
-    // Populate city dropdown (unchanged)
+    // Populate city dropdown
     const cities = [
         "Agra", "Ahmedabad", "Bengaluru", "Bhopal", "Chennai",
         "Ghaziabad", "Hyderabad", "Indore", "Jaipur", "Kanpur",
@@ -642,8 +786,3 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
     }
 
 });
-
-
-
-
-
