@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { code: 'blue', img: ['photos/women/Jacket-lightblue.jpg', 'photos/women/Jacket-lightblue1.jpg'] },
                 { code: 'lightblue', img: ['photos/women/Jacket-blue.jpg', 'photos/women/Jacket-blue1.jpg'] }
             ],
-            img: 'photos/women/Jacket-blue.jpg',
+            img: 'photos/women/Jacket-lightblue.jpg',
             desc: 'Denim jacket with soft lining.'
         },
         {
@@ -786,4 +786,5 @@ Payment: ${orderDetails.payment === 'cod' ? 'Cash on Delivery' : 'Online Payment
     }
 
 });
+
 
