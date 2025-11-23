@@ -1,49 +1,87 @@
-# Clothify 👕✨
+👕 Clothify v2.0
+Clothify has been upgraded! What started as a static layout is now a fully functional frontend e-commerce application. This project demonstrates advanced DOM manipulation, state management using LocalStorage, and a modern, responsive UI with Dark Mode support.
 
-**Clothify** is a demo e-commerce website built for showcasing modern web design and frontend development skills, specifically for an online clothing store.
+🚀 Major Updates in v2.0
+I have completely revamped the project to make it dynamic and interactive. The website now includes:
 
-## 🚀 About This Project
+🌗 Dark/Light Mode: A persistent theme toggle that saves your preference.
 
-This is a **demo project** created for practice and learning purposes. It is not a production-ready application and does not include features like authentication, payment integration, or a backend database.
+🛒 Smart Cart System: Add items to the cart, update quantities, and remove items. Data persists even after refreshing the page (using localStorage).
 
-The goal of this project is to demonstrate:
+🔍 Advanced Filtering: Search products by name, filter by category/price, and sort by price (Low to High / High to Low).
 
-- Clean and responsive UI for an online clothing store
-- Modern HTML, CSS, and JavaScript usage
-- Product listings, categories, and cart-like UI
-- Smooth user experience and intuitive layout
+⚡ Quick View Modal: A detailed popup for every product with image gallery, color selection, and size options.
 
-## 🛠️ Technologies Used
+📱 Fully Responsive: Optimized for Mobile, Tablet, and Desktop screens.
 
-- HTML5
-- CSS3
-- JavaScript  
-*(Add more here if you used frameworks like Bootstrap, Tailwind, React, etc.)*
+📩 Contact Page: A working contact form UI with toast notifications for user feedback.
 
+🛠️ Tech Stack
+Frontend: HTML5, CSS3 (Custom Variables & Flexbox/Grid)
 
-## 📍 Live Demo
+Logic: Vanilla JavaScript (ES6+) - No Frameworks used!
 
-Check out the live demo here:  
-🔗 [https://salinder0133.github.io/clothify]
+Icons: FontAwesome / Emoji
 
-## 🙋‍♂️ What You Can Do
+Storage: Browser LocalStorage API
 
-If you're visiting this repository, here are some ideas:
+📍 Live Demo
+Check out the updated version here: 🔗 [https://salinder0133.github.io/clothify]
 
-- Clone the repo and use it as a starter template
-- Improve the design or make it mobile responsive
-- Add animations or transitions
-- Convert it into a full-fledged project by adding backend functionality
+📸 Features Overview
+1. Dynamic Product Grid
+Products are no longer hardcoded in HTML. They are rendered dynamically via JavaScript objects, making it easy to add or remove products from the code.
 
-## 🤝 Contributing
+2. Shopping Cart Logic
+Real-time total calculation.
 
-This is just a demo project, so contributions are not expected. But if you'd like to suggest improvements or report issues, feel free to open an issue or pull request.
+Prevents duplicate items (increases quantity instead).
 
-## 📜 License
-![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)  
+"Clear Cart" functionality.
 
-This project is licensed under the [MIT License](./LICENSE).  
-Copyright (c) 2025 **Salinder0133**  
+3. Interactive UI Elements
+Toast Notifications: Custom alerts when adding to cart or sending messages.
 
-You are free to use, modify, and distribute this project for personal or commercial purposes.  
-**Credit is required** – please retain the copyright notice.
+Image Gallery: Click on thumbnails in the modal to switch main images.
+
+Color Swatches: Select product colors dynamically.
+
+📂 Project Structure
+Bash
+
+Clothify/
+│
+├── index.html        # Main Store Page
+├── contact.html      # Contact Us Page
+├── style.css         # Global Styles & Dark Mode Variables
+├── script.js         # Main Logic (Cart, Filters, Modal)
+├── photos/           # Product Images folder
+└── README.md         # Documentation
+🙋‍♂️ Future Improvements (Roadmap)
+Here is what I plan to add next (or you can contribute!):
+
+[ ] Checkout Page: A dedicated page to summarize orders.
+
+[ ] Backend Integration: Connecting to Node.js or Firebase.
+
+[ ] Payment Gateway: Integrating Stripe or Razorpay (Test Mode).
+
+[ ] User Login: Auth system for personalized experience.
+
+🤝 Contributing
+This project is open for anyone who wants to learn Vanilla JS concepts.
+
+Fork the Project
+
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
+
+Commit your Changes (git commit -m 'Add some AmazingFeature')
+
+Push to the Branch (git push origin feature/AmazingFeature)
+
+Open a Pull Request
+
+📜 License
+This project is licensed under the MIT License. Copyright (c) 2025 Salinder0133
+
+You are free to use, modify, and distribute this project. Credit is required – please retain the copyright notice.
