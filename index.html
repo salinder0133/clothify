@@ -1,234 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clothify — Order </title>
-
+  <title>Clothify v2.0 </title>
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
+
   <header>
     <div class="wrap top">
-      <div class="logo">Clothify</div>
-      <div style="margin-left:12px;color:var(--muted);font-size:13px">Kapde ki shopping</div>
+      <div class="logo">Clothify <span style="font-size:12px; color:#ff6b6b">.v2.0</span></div>
       <nav>
-        <a href="#">Home</a>
-        <a href="#catalog">Catalog</a>
-        <a href="contact.html">Contact</a>
+        <a href="#">🏠 Home</a>
+        <a href="#catalog">👕 Catalog</a>
+         <a href="contact.html">📞 Contact Us</a>
       </nav>
-
-      <div id="openCart" style="position:relative;cursor:pointer;margin-left:16px">
-        🛒 <span id="cartCount"
-          style="position:absolute;top:-8px;right:-8px;background:red;color:white;font-size:10px;padding:2px 5px;border-radius:50%">0</span>
+      <div class="actions">
+        <button id="darkModeToggle" class="icon-btn" title="Toggle Dark Mode">🌙</button>
+        <div id="openCart" class="icon-btn cart-btn">
+          🛒 <span id="cartCount">0</span>
+        </div>
       </div>
     </div>
   </header>
 
   <main>
     <section class="hero wrap">
-      <div class="hero-card">
-        <h2>Welcome to Clothify</h2>
-        <p style="color:var(--muted);margin-top:6px">Explore our latest collection and order directly — no account
-          required.</p>
-        <div style="margin-top:12px" class="search">
-          <input type="search" id="search" placeholder="Search products, sizes, colors..." />
-          <button class="primary" id="searchBtn">Search</button>
+      <div class="hero-card main-hero">
+        <span class="badge">✨ New Collection</span>
+        <h1>Upgrade Your Style Game</h1>
+        <p>Premium fashion delivered to your doorstep. No account needed.</p>
+        <div class="search-box">
+          <input type="search" id="search" placeholder="Search for t-shirts, jeans..." />
+          <button id="searchBtn">🔍</button>
         </div>
       </div>
-
-      <aside class="hero-card">
-        <h4>Quick size guide</h4>
-        <p class="meta">Model height: 6'0" | Wears: M</p>
-        <table style="width:100%;margin-top:8px;font-size:13px;border-collapse:collapse">
-          <tr>
-            <td style="padding:6px;border-bottom:1px dashed #eef2ff">S</td>
-            <td style="padding:6px;border-bottom:1px dashed #eef2ff">Chest 34-36"</td>
-          </tr>
-          <tr>
-            <td style="padding:6px;border-bottom:1px dashed #eef2ff">M</td>
-            <td style="padding:6px;border-bottom:1px dashed #eef2ff">Chest 38-40"</td>
-          </tr>
-          <tr>
-            <td style="padding:6px">L</td>
-            <td style="padding:6px">Chest 42-44"</td>
-          </tr>
+      <aside class="hero-card guide-card">
+        <h4>📏 Size Guide</h4>
+        <table class="size-table">
+          <tr><td>S</td><td>34-36" Chest</td></tr>
+          <tr><td>M</td><td>38-40" Chest</td></tr>
+          <tr><td>L</td><td>42-44" Chest</td></tr>
         </table>
       </aside>
     </section>
 
     <section class="grid wrap" id="catalog">
       <aside class="filters">
-        <h3>Filters</h3>
-        <div class="filter">
+        <div class="filter-header"><h3>⚡ Filters</h3></div>
+        
+        <div class="filter-group">
           <h4>Category</h4>
-          <label><input type="checkbox" class="cat" value="Men" /> Men</label><br />
-          <label><input type="checkbox" class="cat" value="Women" /> Women</label><br />
-          <label><input type="checkbox" class="cat" value="Kids" /> Kids</label>
+          <label><input type="checkbox" class="cat" value="Men" /> 👨 Men</label>
+          <label><input type="checkbox" class="cat" value="Women" /> 👩 Women</label>
+          <label><input type="checkbox" class="cat" value="Kids" /> 👶 Kids</label>
         </div>
-        <div class="filter">
+
+        <div class="filter-group">
           <h4>Size</h4>
-          <label><input type="checkbox" class="sizeFilter" value="S" /> S</label>
-          <label><input type="checkbox" class="sizeFilter" value="M" /> M</label>
-          <label><input type="checkbox" class="sizeFilter" value="L" /> L</label>
-          <label><input type="checkbox" class="sizeFilter" value="XL" /> XL</label>
-        </div>
-        <div class="price-filter">
-          <label>Price</label><br />
-          <label for="minPrice">Min</label>
-          <input type="number" id="minPrice" name="minPrice" placeholder="0" />
-
-          <label for="maxPrice">Max</label>
-          <input type="number" id="maxPrice" name="maxPrice" placeholder="10000" />
-
-          <button id="applyPriceFilter">Apply</button>
-        </div>
-      </aside>
-
-      <section>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-          <div style="color:var(--muted)">Showing <span id="count">0</span> products</div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <label style="color:var(--muted);font-size:13px">Sort</label>
-            <select id="sort">
-              <option value="popular">Popular</option>
-              <option value="low">Price - Low to High</option>
-              <option value="high">Price - High to Low</option>
-            </select>
+          <div class="size-filters">
+            <label><input type="checkbox" class="sizeFilter" value="S" /> S</label>
+            <label><input type="checkbox" class="sizeFilter" value="M" /> M</label>
+            <label><input type="checkbox" class="sizeFilter" value="L" /> L</label>
+            <label><input type="checkbox" class="sizeFilter" value="XL" /> XL</label>
           </div>
         </div>
 
+        <div class="filter-group">
+          <h4>Price Range</h4>
+          <div class="price-inputs">
+            <input type="number" id="minPrice" placeholder="Min" />
+            <input type="number" id="maxPrice" placeholder="Max" />
+          </div>
+          <button id="applyPriceFilter" class="secondary-btn">Apply</button>
+        </div>
+      </aside>
+
+      <section class="catalog-content">
+        <div class="catalog-header">
+          <div class="result-count">Showing <span id="count" style="font-weight:700; color:#ff6b6b">0</span> styles</div>
+          <div class="sort-box">
+            <select id="sort">
+              <option value="popular">🔥 Popular</option>
+              <option value="low">💰 Price: Low to High</option>
+              <option value="high">💎 Price: High to Low</option>
+            </select>
+          </div>
+        </div>
         <div class="products" id="products"></div>
       </section>
     </section>
 
-    <div id="cartDrawer" class="drawer" style="display:none">
-      <h3>Your Cart</h3>
-      <div id="cartItems"></div>
-
-      <div style="margin-top:12px; display:flex; justify-content:space-between; align-items:center; gap: 8px;">
-        <strong>Total: <span id="cartTotal">₹0</span></strong>
-
-        <div style="display:flex; gap: 8px;">
-          <button id="clearCartBtn" class="primary">Clear</button>
-          <button id="checkoutBtn" class="primary" disabled>Proceed</button>
+    <div id="cartOverlay" class="overlay" style="display:none"></div>
+    <div id="cartDrawer" class="drawer">
+      <div class="drawer-header">
+        <h3>🛍 Your Cart</h3>
+        <button id="closeCartBtn" class="close-btn">✕</button>
+      </div>
+      <div id="cartItems" class="cart-items"></div>
+      <div class="drawer-footer">
+        <div class="total-row"><span>Total</span><span id="cartTotal">₹0</span></div>
+        <div class="drawer-actions">
+          <button id="clearCartBtn" class="secondary-btn">Clear</button>
+          <button id="checkoutBtn" class="primary-btn" disabled>Proceed to Pay →</button>
         </div>
       </div>
     </div>
 
-    <div id="modalBg" class="modal-bg" style="display:none; align-items: center; justify-content: center;">
-      <div class="modal" role="dialog" aria-modal="true" style="display: flex; gap: 20px; max-width: 900px;">
-        <div class="modal-img-scroll" style="flex:1;">
-          <div id="modal-main-image-container" class="modal-main-image-container">
-            <img id="modalImg" src="" alt="product" />
-          </div>
-
-          <div id="modal-image-previewer" class="modal-image-previewer">
-          </div>
+    <div id="modalBg" class="modal-bg" style="display:none;">
+      <div class="modal">
+        <div class="modal-left">
+          <div class="main-img-wrap"><img id="modalImg" src="" alt="product" /></div>
+          <div id="modal-image-previewer" class="thumbnails"></div>
         </div>
-
-        <div style="flex: 1; display: flex; flex-direction: column;">
-          <h3 id="modalTitle"></h3>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div class="price" id="modalPrice"></div>
-            <div class="meta" id="modalStock">In stock</div>
+        <div class="modal-right">
+          <div class="modal-header">
+            <h2 id="modalTitle"></h2>
+            <button id="closeModal" class="close-icon">✕</button>
           </div>
-          <p class="meta" id="modalDesc"></p>
-
-          <div>
-            <h4 style="margin-top:12px">Choose color</h4>
+          <div class="price-tag" id="modalPrice"></div>
+          <p id="modalDesc" class="desc-text"></p>
+          
+          <div class="selection-group">
+            <h4>🎨 Color</h4>
             <div class="swatches" id="modalSwatches"></div>
           </div>
-
-          <div>
-            <h4 style="margin-top:12px">Size</h4>
+          <div class="selection-group">
+            <h4>📏 Size</h4>
             <div class="size-grid" id="modalSizes"></div>
           </div>
 
-          <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
-            <label>Qty
-              <input id="modalQty" type="number" value="1" min="1"
-                style="width:70px;padding:8px;border-radius:8px;border:1px solid #e6e9ef" />
-            </label>
-            <button id="addToCartModal" class="primary">Add to Cart</button>
-            <button id="orderNowBtn" class="primary" style="margin-left:8px;">Order Now</button>
-          </div>
-
-          <div style="margin-top:8px;">
-            <strong id="Total">Total: ₹0</strong>
-          </div>
-
-          <div id="orderModal"
-            style="display:none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center;">
-            <div id="orderNowForm" style="background:#fff; padding:20px; border-radius:8px; display:none;">
-              <form id="quickOrderForm">
-                <h2>Order Form</h2>
-
-                <label>Full Name:</label><br>
-                <input type="text" name="fullname" required><br><br>
-
-                <label>Mobile Number:</label><br>
-                <input type="tel" name="mobile" pattern="[0-9]{10}" required><br><br>
-
-                <label>Email:</label><br>
-                <input type="email" name="email"><br><br>
-
-                <label>Full Address:</label><br>
-                <textarea name="address" rows="3" required></textarea><br><br>
-
-                <label for="city">Select City:</label><br>
-                <select id="city" name="city" required>
-                  <option value="">-- Select City --</option>
-                </select><br><br>
-
-                <label for="states">Select State:</label><br>
-                <select id="states" name="state" required>
-                  <option value="">-- Select State --</option>
-                </select><br><br>
-
-                <label>Pincode:</label><br>
-                <input type="number" name="pincode" pattern="[0-9]{6}" required><br><br>
-
-                <label>Details:</label>
-                <strong id="showqty"></strong><br><br>
-
-                <label>Payment Method:</label><br>
-                <input type="radio" id="cod" name="payment" value="cod" required>
-                <label for="cod">Cash on Delivery</label><br>
-
-                <input type="radio" id="online" name="payment" value="online" required>
-                <label for="online">Online Payment</label><br><br>
-
-                <button type="submit">Place Order</button>
-              </form>
+          <div class="action-area">
+            <div class="qty-box">
+               <button onclick="document.getElementById('modalQty').stepDown()">-</button>
+               <input id="modalQty" type="number" value="1" min="1" readonly />
+               <button onclick="document.getElementById('modalQty').stepUp()">+</button>
             </div>
+            <strong id="Total" style="font-size: 18px;">Total: ₹0</strong>
           </div>
 
-
-          <div style="margin-top:12px;color:var(--muted);font-size:13px">
-            <strong>Return policy:</strong> 15-day easy returns on unused items.
-          </div>
-
-          <div style="margin-top:12px">
-            <button id="closeModal" style="padding:8px;border-radius:8px;border:1px solid #e6e9ef"
-              aria-label="Close product view">Close</button>
+          <div class="btn-group">
+             <button id="addToCartModal" class="secondary-btn">🛒 Add to Cart</button>
+             <button id="orderNowBtn" class="primary-btn">⚡ Order Now</button>
           </div>
         </div>
       </div>
     </div>
 
+    <div id="orderModal" style="display:none;">
+      <div id="orderNowForm">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+          <h2>🚀 Quick Checkout</h2>
+          <button id="closeOrderForm" class="close-icon">✕</button>
+        </div>
+        <form id="quickOrderForm">
+          <div class="form-group"><label>Name</label><input type="text" name="fullname" required></div>
+          <div class="form-group"><label>Mobile</label><input type="tel" name="mobile" pattern="[0-9]{10}" required></div>
+          <div class="form-group"><label>Address</label><textarea name="address" rows="2" required></textarea></div>
+          
+          <div class="form-row">
+            <div class="form-group">
+               <label>State</label>
+               <select id="state" name="state" required><option value="">Select State</option></select>
+            </div>
+            <div class="form-group">
+               <label>City</label>
+               <select id="city" name="city" required disabled><option value="">Select State First</option></select>
+            </div>
+          </div>
+          <div class="form-group"><label>Pincode</label><input type="number" name="pincode" required></div>
+          
+          <div class="order-summary-box"><strong id="showqty"></strong></div>
+          
+          <label style="margin-top:15px; display:block">Payment Method</label>
+          <div class="payment-options">
+             <label class="radio-card"><input type="radio" name="payment" value="cod" checked> <span>💵 COD</span></label>
+             <label class="radio-card"><input type="radio" name="payment" value="online"> <span>💳 Online</span></label>
+          </div>
+          <button type="submit" class="primary-btn full-width">Confirm Order</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="toast-container"></div>
   </main>
 
   <footer class="wrap">
-    <div><strong>Clothify</strong> • GST invoicing, returns, size-charts aur payment integrations production me
-      add
-      karne honge.</div>
+    <p>© 2025 Clothify. All rights reserved.</p>
   </footer>
 
   <script src="script.js"></script>
 </body>
-
 </html>
-
