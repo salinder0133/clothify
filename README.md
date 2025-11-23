@@ -1,4 +1,4 @@
-👕 Clothify v2.0
+#👕 Clothify v2.0
 Clothify has been upgraded! What started as a static layout is now a fully functional frontend e-commerce application. This project demonstrates advanced DOM manipulation, state management using LocalStorage, and a modern, responsive UI with Dark Mode support.
 
 🚀 Major Updates in v2.0
