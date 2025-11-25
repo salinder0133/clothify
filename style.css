@@ -27,7 +27,7 @@ body.dark-mode {
 
 * {
   box-sizing: border-box;
-  margin: 0;
+  margin: 2;
   padding: 0;
 }
 
@@ -774,3 +774,4 @@ nav a:hover {
     flex: 1;
   }
 }
+
